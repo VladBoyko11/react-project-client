@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "Golos SemiBold";
+  src: url(../../fonts/golos/GolosText-SemiBold.ttf);
+}
+
+header {
+  width: 100vw;
+  height: 13vh;
+  background-color: #6700cc;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loggedInUser{
+  cursor: pointer;
+}
+
+.headerDropdown{
+  background-color: indianred;
+}
+
+.btnAdminPage{
+  background-color: indianred;
+}
+.userPageIcon{
+  width: 50px;
+  height: 50px;
+  background-color: #ffc107;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.userPageIcon:hover{
+  background-color: #ffcd07;
+}
+.btnAdminPage {
+  height: 75%;
+  background-color: #ffc107 !important;
+  color: black !important;
+  font-family: "Golos SemiBold" !important; 
+}

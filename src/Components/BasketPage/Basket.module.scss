@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Golos Bold';
+    src: url(../../fonts/golos/GolosText-Bold.ttf);
+}
+.totalPrice {
+    font-family: 'Golos Bold';
+    color: #ff5959;
+    background-color: #fef7e2;
+    border-radius: 5px;
+    border: 2px solid #ffc107;
+    padding: 5px;
+    height: 18vh;
+    width: 25vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.totalPrice div span:nth-child(1) {
+    font-size: 1.4rem;
+}
+.totalPrice div {
+    width: 100%;
+    text-align: center;
+}
+.btnValidePurchase{
+    height: 7vh;
+    width: 60%;
+}
+.shoppingCart {
+    width: 100%;
+    font-family: "Golos Bold";
+}
+.btnChangeCountOfProduct {
+    border: 1px solid black;
+    background: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    font-family: "Golos Bold";
+    width: 30px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+}
+
+.btnChangeCountOfProductActive {
+    cursor: pointer;
+    color: black;
+}
+.btnChangeCountOfProductNotActive {
+    cursor: auto;
+    color: rgb(160, 160, 160);
+}
+.cardTextName {
+    width: 100%;
+    font-family: "Golos Text", sans-serif;
+    font-size: 1.2rem;
+}
+.cardTextRating {
+    width: 100%;
+    font-family: "Golos Regular";
+}
+.cardTextPrice {
+    width: 100%;
+    font-family: "Golos Bold", sans-serif;
+    color: #ff5959;
+}
+.cardTextPrice span:first-child {
+    font-size: 1.2rem;
+}
+.basketItem{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    border: 1px solid #b9b9b9;
+    border-radius: 5px;
+    padding: 3px;
+    width: 100%;
+}
+.devicePrice{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.cardDeviceRightSide{
+    width: 20%;
+    position: relative;
+}
+
+.basketDevicesContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+}

@@ -1,0 +1,223 @@
+@font-face {
+  font-family: 'Golos Text';
+  src: url('../../fonts/golos/GolosText-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Golos Bold';
+  src: url('../../fonts/golos/GolosText-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Golos Regular';
+  src: url('../../fonts/golos/GolosText-Regular.ttf') format('truetype');
+}
+
+@mixin inputSquareStyle{
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  margin-right: 10px;
+  position: relative;
+}
+.inputSquare{
+  @include inputSquareStyle
+}
+.activeInputSquare{
+ @include inputSquareStyle;
+  background-color: green;
+}
+.check {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate( 45deg);
+}
+
+.btnFilterBrandItem{
+  display: flex;
+  width: 80%;
+  align-items: center;
+  border: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: white;
+}
+.btnFilterBrandItem:hover{
+  background-color: #ffecab;
+}
+
+@mixin pagination-item {
+  background-color: #fcca4e;
+  font-weight: 700;
+  width: 35px;
+  height: 35px;
+  border: 1px solid black;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.selectedPage{
+  @include pagination-item;
+}
+.paginationItem{
+  @include pagination-item;
+  width: 40px;
+  height: 40px;
+  box-sizing: content-box;
+  border: 4px solid #ff5959;
+}
+@media screen and (max-width: 900px) {
+  .deviceCard {
+    width: 40vw;
+    border: 1px solid #b9b9b9;
+    border-radius: 5px;
+    margin: 0 1vw 3vh 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+  }
+  .deviceCardImg img {
+    width: auto;
+    height: 85%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 900px) {
+  .deviceCard {
+    width: 26vw;
+    border: 1px solid #b9b9b9;
+    border-radius: 5px;
+    margin: 0 1vw 3vh 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+  }
+  .deviceCardImg img {
+    width: auto;
+    height: 70%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 1600px) and (min-width: 1200px) {
+  .deviceCard {
+    width: 18vw;
+    border: 1px solid #b9b9b9;
+    border-radius: 5px;
+    margin: 0 1vw 3vh 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+  }
+  .deviceCardImg img {
+    width: auto;
+    height: 70%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .deviceCard {
+    width: 16vw;
+    border: 1px solid #b9b9b9;
+    border-radius: 5px;
+    margin: 0 1vw 3vh 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+  }
+  .deviceCardImg img {
+    width: auto;
+    height: 60%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.deviceCardImg{
+  cursor: pointer;
+}
+.deviceCardImg{
+  width: 100%;
+  height: 22vh;
+  margin: 3px;
+  overflow: hidden;
+}
+@media screen and (min-width: 1500px){
+  .deviceCardImg img {
+    width: auto;
+    height: 75%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 1500px) and (min-width: 1200px) {
+  .deviceCardImg img {
+    width: auto;
+    height: 65%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+.shoppingBtn{
+  position: relative;
+  float: right;
+}
+.shoppingBtnIcon{
+  font-size: 2.2rem;
+}
+.shoppingBtn:hover .shoppingBtnIcon{
+  cursor: pointer;
+  color: #6700cc;
+}
+.deviceInBasketIcon{
+  position: absolute;
+  font-size: 1.2rem;
+  top: 0;
+  right: 0;
+  color: #6700cc;
+}
+.shoppingBtn:hover .deviceInBasketIcon {
+  cursor: pointer;
+  color: black;
+}
+.cardTextName {
+  width: 100%;
+  font-family: "Golos Text", sans-serif;
+  font-size: 1.2rem;
+}
+.cardTextPrice {
+  width: 100%;
+  font-family: "Golos Bold", sans-serif;
+  color: #ff5959;
+}
+.cardTextPrice span:first-child {
+  font-size: 1.2rem;
+}
+.cardTextRating {
+  width: 100%;
+  font-family: "Golos Regular";
+}
+.cardTextRating div {
+  display: inline-block;
+}
+.brandsContainer {
+  width: 200px;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}

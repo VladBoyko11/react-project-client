@@ -1,0 +1,12 @@
+.notification{
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform:translate(-50%, -50%);
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 5px;
+  width: 40vw;
+  height: auto;
+  font-size: 1.5rem;
+}
