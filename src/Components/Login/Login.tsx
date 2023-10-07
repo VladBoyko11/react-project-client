@@ -10,8 +10,9 @@ import { renderField } from "../common/FormControl";
 import { email, required } from "../common/Validators/Validators";
 import { FormComponent } from "./FormComponent";
 
+import Input from '@mui/material/Input';
+import * as style from './Login.module.scss'
 const Login: React.FC<LoginPropsType> = (props) => {
-
     const submitForm: FormSubmitHandler = (formData: {email?: string, password?: string}) => {
         if(formData.email && formData.password) props.login({email: formData.email, password: formData.password})
     }
@@ -35,9 +36,10 @@ const Login: React.FC<LoginPropsType> = (props) => {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1 className={style.loginHeader}>Login</h1>
             <div>If you don`t have account please <button className={'btn-warning h-50'} onClick={registrationAccount}>registration it</button></div>
             <LoginReduxForm {...props} onSubmit={submitForm}/>
+            <Input />
         </div>
     )
 }

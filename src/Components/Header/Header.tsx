@@ -33,7 +33,7 @@ const Header: React.FC<HeaderPropsType> = (props) => {
     return (
         <header>
             <div className={`dropdown`}>
-                <button className={'bg-red-500'} id='dropdownMenuButton' data-bs-toggle="dropdown"
+                <button className={style.dropdownBtn} id='dropdownMenuButton' data-bs-toggle="dropdown"
                         aria-expanded="false"><FontAwesomeIcon icon={faBars as IconProp } fontSize='30px' /></button>
                 <div className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
                     <div className='dropdown-item' style={{cursor: 'pointer'}} onClick={() => {
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderPropsType> = (props) => {
                     </div>
                     {props.role === 'ADMIN' ? <button className={style.btnAdminPage} onClick={() => {redirectToSomePage('/admin-page')}}>Admin Page</button> : null}
                 </div>
-                : <button className={" bg-red-800 text-amber-700"} onClick={() => {redirectToSomePage('/auth')}}>Authorization</button>}
+                : <button className={style.authorizationBtn} onClick={() => {redirectToSomePage('/auth')}}>Authorization</button>}
         </header>
     )
 }
