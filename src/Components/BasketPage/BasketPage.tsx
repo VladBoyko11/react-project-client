@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BasketDevice as TypeBasketDevice, Device } from "src/redux/types";
 import BasketDevice from "./BasketDevice";
-import style from './Basket.module.scss'
+import * as style from './Basket.module.scss'
 
 type BasketPagePropsType = {
     devices: Array<Device>,

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {faCartShopping, faCircleCheck} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import style from './Devices.module.scss'
+import * as style from './Devices.module.scss'
 import {addDeviceToBasket, deleteDeviceFromBasket, getDevicesFromBasket, getOneDevice} from "../../redux/basketSlice";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { connect, ConnectedProps } from "react-redux";

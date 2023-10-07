@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../redux/store";
-import style from "../Devices/Devices.module.scss";
+import * as style from "../Devices/Devices.module.scss";
 
 const Pagination: React.FC<PaginationProps> = (props) => {
     const totalPages = Math.ceil(props.totalCount / props.limit)

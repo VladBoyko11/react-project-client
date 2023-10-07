@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../BasketPage/Basket.module.scss";
+import * as style from "../BasketPage/Basket.module.scss";
 import {useNavigate} from "react-router-dom";
 import { Device } from "../../redux/types";
 import RatingStars from "../common/RatingStars/RatingStars";

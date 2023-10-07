@@ -1,6 +1,6 @@
 import React from "react";
 import { Type } from "../../redux/types";
-import style from './Devices.module.scss'
+import * as style from './Devices.module.scss'
 
 const FilterTypeItem = (props: {type: Type}) => {
     return <button className={style.btnFilterBrandItem}>

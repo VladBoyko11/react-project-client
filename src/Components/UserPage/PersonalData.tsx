@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect, ConnectedProps} from "react-redux";
 import {setNewEmail} from "../../redux/authSlice";
 import {Field, FormSubmitHandler, InjectedFormProps, reduxForm} from "redux-form";
-import style from './User.module.scss'
+import * as style from './User.module.scss'
 import {email} from "../common/Validators/Validators";
 import { RootState } from "../../redux/store";
 import { renderField } from "../common/FormControl";

@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./User.module.scss";
+import * as style from "./User.module.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useNavigate} from "react-router-dom";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";

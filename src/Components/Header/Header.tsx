@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import style from './Header.module.scss'
+import * as style from './Header.module.scss'
 import {NavLink, useNavigate} from "react-router-dom";
 import {connect, ConnectedProps} from "react-redux";
 import {auth} from "../../redux/authSlice";
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderPropsType> = (props) => {
     return (
         <header>
             <div className={`dropdown`}>
-                <button className={`btn btn-warning`} id='dropdownMenuButton' data-bs-toggle="dropdown"
+                <button className={'bg-red-500'} id='dropdownMenuButton' data-bs-toggle="dropdown"
                         aria-expanded="false"><FontAwesomeIcon icon={faBars as IconProp } fontSize='30px' /></button>
                 <div className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
                     <div className='dropdown-item' style={{cursor: 'pointer'}} onClick={() => {

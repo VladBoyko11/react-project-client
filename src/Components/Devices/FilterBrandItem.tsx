@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import style from './Devices.module.scss';
+import * as style from './Devices.module.scss';
 import {useParams} from "react-router-dom";
 import { Brand } from "../../redux/types";
 

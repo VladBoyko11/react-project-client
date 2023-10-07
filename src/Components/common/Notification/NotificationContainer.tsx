@@ -1,5 +1,5 @@
 import React from "react";
-import style from './NotificationContainer.module.scss'
+import * as style from './NotificationContainer.module.scss'
 import {connect, ConnectedProps} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamation} from "@fortawesome/free-solid-svg-icons";
