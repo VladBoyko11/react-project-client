@@ -20,7 +20,7 @@
     "test": "cross-env jest --config __jest__/jest.config.js",
     "test-watch": "jest --watch --config __jest__/jest.config.js",
     "test-coverage": "jest --coverage --config __jest__/jest.config.js",
-    "vercel-build": "npm run build-prod"
+    "vercel-build": "cross-env-shell webpack ${npm_package_config_prod} --stats-children"
   },
   "keywords": [],
   "author": "",
