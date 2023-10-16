@@ -36,7 +36,7 @@ export type DeviceInfo = {
 
 export type Rating = {
     id?: number,
-    rating?: number,
+    rate: number,
     userId?: number,
     deviceId?: number
 }

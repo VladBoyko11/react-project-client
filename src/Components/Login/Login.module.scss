@@ -1,3 +1,14 @@
-.loginHeader{
-    @apply text-2xl w-96 border-b-2
+.authPage{
+    @apply w-8/12 bg-violet-100 p-5 rounded flex flex-wrap justify-center;
+    margin: 0 auto;
+}
+.authHeader {
+    @apply text-3xl border-b-2 border-violet-700 text-center font-bold pb-4 w-full;
+}
+
+.formAuth {
+    @apply w-5/6 justify-center flex flex-wrap;
+}
+.formGroup {
+    @apply w-full
 }

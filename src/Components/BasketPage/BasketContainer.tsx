@@ -5,6 +5,7 @@ import {getDevicesFromBasket, getOneDevice, setTotalPrice} from "src/redux/baske
 import { RootState } from "src/redux/store";
 import Preloader from "../Preloader/Preloader";
 import { useAppDispatch } from "src/hook";
+import { Alert, AlertTitle } from "@mui/material";
 
 const BasketContainer: React.FC<BasketContainerPropsType> = (props) => {
 
@@ -23,7 +24,7 @@ const BasketContainer: React.FC<BasketContainerPropsType> = (props) => {
         <div>
             {toggleDownloadReady ? <div>
                 <BasketPage devices={props.devices} setTotalPrice={props.setTotalPrice} totalPrice={props.totalPrice} basketDevices={props.basketDevices}/>
-            </div> : <Preloader />}
+            </div> : <Alert variant="outlined" severity="info"><AlertTitle>Info</AlertTitle>Your basket is empty</Alert>}
         </div>
     )
 }

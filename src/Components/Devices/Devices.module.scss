@@ -37,6 +37,9 @@
   border-width: 0 2px 2px 0;
   transform: rotate( 45deg);
 }
+option {
+  cursor: pointer;
+}
 
 .btnFilterBrandItem{
   display: flex;
@@ -175,8 +178,7 @@
   }
 }
 .shoppingBtn{
-  position: relative;
-  float: right;
+  
 }
 .shoppingBtnIcon{
   font-size: 2.2rem;
@@ -187,9 +189,10 @@
 }
 .deviceInBasketIcon{
   position: absolute;
+  z-index: 9999;
   font-size: 1.2rem;
   top: 0;
-  right: 0;
+  right: 1;
   color: #6700cc;
 }
 .shoppingBtn:hover .deviceInBasketIcon {
@@ -220,4 +223,31 @@
   width: 200px;
   border-top: 1px solid black;
   border-right: 1px solid black;
+}
+.devicesContainer{
+  @apply flex flex-wrap w-10/12 justify-center
+}
+.devicePage{
+  @apply flex flex-wrap justify-around w-3/4 my-0 mx-auto
+}
+.devicePageLeftSide{
+  @apply w-4/12
+}
+.devicePageHeader{
+  @apply text-center text-3xl mb-3 w-full
+}
+.devicePagePrice{
+  @apply text-center text-3xl mt-3
+}
+.devicePagePriceSpan{
+  @apply text-red-600
+}
+.devicePageRating{
+  @apply w-4/6
+}
+.devicePageRightSide{
+  @apply w-7/12 ml-3
+}
+.devicePageDescription{
+  @apply text-xl mt-3 w-full
 }

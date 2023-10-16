@@ -1,0 +1,20 @@
+.adminPageButtons{
+    @apply py-2 flex flex-col h-40 w-72 justify-between
+}
+
+.addNewTypeBrandForm{
+    @apply flex flex-col justify-between h-28 mt-10
+}
+.formDevice{
+    @apply flex flex-col justify-between h-full mt-10
+}
+.rightMainContant{
+    @apply h-full ml-5 w-3/6
+}
+.adminPage{
+    @apply w-3/4 flex justify-center flex-wrap;
+    margin: 0 auto;
+}
+.adminPageHeader{
+    @apply text-3xl w-full text-center mb-5
+}

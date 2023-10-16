@@ -21,6 +21,11 @@
     "test-watch": "jest --watch --config __jest__/jest.config.js",
     "test-coverage": "jest --coverage --config __jest__/jest.config.js"
   },
+  "vercel": {
+    "builds": [
+      { "src": "./__webpack__/prod.config.js", "use": "@vercel/webpack" }
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

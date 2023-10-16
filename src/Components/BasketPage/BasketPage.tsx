@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BasketDevice as TypeBasketDevice, Device } from "src/redux/types";
 import BasketDevice from "./BasketDevice";
 import * as style from './Basket.module.scss'
+import { Button } from "@mui/material";
 
 type BasketPagePropsType = {
     devices: Array<Device>,
@@ -36,10 +37,10 @@ const BasketPage: React.FC<BasketPagePropsType> = (props) => {
                     <span>Total Price: {props.totalPrice}</span>
                     <span>₴</span>
                 </div>
-                <button className={`btn-warning btn mt-2 + ${style.btnValidePurchase}`} onClick={() => {
+                <Button variant="contained" className={style.btnValidePurchase} onClick={() => {
                     console.log(props.basketDevices)
                     console.log("totalPrice: " + props.totalPrice)
-                }}>Valide purchase</button>
+                }}>Valide purchase</Button>
             </div>
         </div>
     )

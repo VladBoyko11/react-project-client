@@ -3,26 +3,27 @@ import {Route, useNavigate, Routes} from "react-router-dom";
 import AddNewDevice from "./AddNewDevice";
 import AddNewType from "./AddNewType";
 import AddNewBrand from "./AddNewBrand";
+import { Button } from "@mui/material";
+import * as style from './AdminPage.scss'
 
 const AdminPage: React.FC = () => {
-
     const navigate = useNavigate()
     const redirectToSomePage = (redirectPath: string) =>{
         navigate(redirectPath, {replace: true})
     }
 
     return (
-        <div className={'d-flex flex-wrap'}>
-            <h2 className={'w-100 text-center'}>ADMIN PAGE</h2>
-            <div className={'navbar w-25 border-top border-end h-25'}>
-                <button className='btn-warning m-2 w-100 d-flex' onClick={() => {
-                    redirectToSomePage('/admin-page/add-new-device')}}>Add new device</button>
-                <button className='btn-warning m-2 w-100 mb-2 d-flex' onClick={() => {
-                    redirectToSomePage('/admin-page/add-new-type')}}>Add new type</button>
-                <button className='btn-warning m-2 w-100 mb-2 d-flex' onClick={() => {
-                    redirectToSomePage('/admin-page/add-new-brand')}}>Add new brand</button>
+        <div className={style.adminPage}>
+            <h2 className={style.adminPageHeader}>ADMIN PAGE</h2>
+            <div className={style.adminPageButtons}>
+                <Button variant="contained" fullWidth onClick={() => {
+                    redirectToSomePage('/admin-page/add-new-device')}}>Add new device</Button>
+                <Button variant="contained" fullWidth onClick={() => {
+                    redirectToSomePage('/admin-page/add-new-type')}}>Add new type</Button>
+                <Button variant="contained" fullWidth onClick={() => {
+                    redirectToSomePage('/admin-page/add-new-brand')}}>Add new brand</Button>
             </div>
-            <div className={'ms-5'}>
+            <div className={style.rightMainContant}>
                 <Routes >
                     <Route path="add-new-device" element={
                         <AddNewDevice />}

@@ -15,7 +15,7 @@ const PersonalData: React.FC<PersonalDataPropsType> = (props) => {
     }
     return (
         <div className={'ms-4'}>
-            <h4>Your email address: {props.email}</h4>
+            <h2>Your email address: {props.email}</h2>
             {formEditEmailActive ? <EditEmailReduxForm onSubmit={submitForm}/>: null}
             <div>
                 <button className={'btn btn-warning w-25'} onClick={() => {

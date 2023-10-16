@@ -10,6 +10,7 @@ import { RootState } from "src/redux/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@mui/material";
 
 const BasketDevice: React.FC<BasketDevicePropsType> = (props) => {
     const dispatch = useAppDispatch()
@@ -34,36 +35,36 @@ const BasketDevice: React.FC<BasketDevicePropsType> = (props) => {
                     <div className={props.countOfProducts === 1 || props.countOfProducts === 0 ? `${style.btnChangeCountOfProductNotActive} ${style.btnChangeCountOfProduct}` : `${style.btnChangeCountOfProductActive} ${style.btnChangeCountOfProduct}`} onClick={() => {
                         if(props.countOfProducts) {
                             if(props.countOfProducts > 1) {
-                                if(props.device.id) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: props.countOfProducts - 1})
+                                if(props.device.id && props.basketId) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: props.countOfProducts - 1, basketId: props.basketId})
                             }
                         }
                     }}>—</div>
                     <input className='w-25 ms-2 me-2 text-center rounded-1' value={props.countOfProducts} onChange={(e) => {
                         if(!isNaN(Number(e.target.value))) {
                             if(props.countOfProducts) {
-                                if(props.countOfProducts > 1) {
-                                    if(props.device.id) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: Number(e.target.value)})
+                                if(props.countOfProducts > 1 && props.basketId) {
+                                    if(props.device.id) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: Number(e.target.value), basketId: props.basketId})
                                 }
                             }
                         }
                     }}/>
                     <div className={`${style.btnChangeCountOfProduct}`} onClick={() => {
                         if(props.countOfProducts) {
-                            if(props.countOfProducts >= 0) {
-                                if(props.device.id) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: props.countOfProducts + 1})
+                            if(props.countOfProducts >= 0 && props.basketId) {
+                                if(props.device.id) props.changeCountOfProducts({deviceId: props.device.id, countOfProducts: props.countOfProducts + 1, basketId: props.basketId})
                             }
                         }
                     }}>+</div>
                 </div>
             </div>
             <div className='col-2 position-relative'>
-                <div className='h-25 text-end' onClick={() => {
+                <Button variant="contained" className='h-25 text-end' onClick={() => {
                     if(props.basketId && props.device.id) {
                         props.deleteDeviceFromBasket({basketId: props.basketId, deviceId: props.device.id, dispatch})
                     }
                 }}>
                     <FontAwesomeIcon className='btn' icon={faTrash as IconProp}/>
-                </div>
+                </Button>
                 <div className={style.devicePrice}>
                      <span>Price: {props.device.price}</span>
                     <span>₴</span>

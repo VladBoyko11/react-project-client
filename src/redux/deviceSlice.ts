@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {deviceApi} from "../API/API";
 import { Brand, Device, Rating, Type } from "./types";
+import actions from "redux-form/lib/actions";
 
 type deviceSliceType = {
     types: Array<Type>,
@@ -59,9 +60,9 @@ const deviceSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<{page: number}>) {
             state.currentPage = action.payload.page
         },
-        setTotalCount(state, action: PayloadAction<number>) {
-            state.totalCount = action.payload
-        },
+        // setTotalCount(state, action: PayloadAction<number>) {
+        //     state.totalCount = action.payload
+        // },
         setToggleIsFetching(state, action: PayloadAction<boolean>) {
             state.isFetching = action.payload
         },
@@ -72,7 +73,7 @@ const deviceSlice = createSlice({
             state.device = action.payload
         })
         .addCase(getDevicesThunk.fulfilled, (state, action) => {
-            state.totalCount = action.payload.length
+            // state.totalCount = action.payload.length
             state.devices = action.payload
         })
         .addCase(getBrandThunk.fulfilled, (state, action) => {
@@ -89,6 +90,9 @@ const deviceSlice = createSlice({
         })
         .addCase(addYourDeviceRatingThunk.fulfilled, (state, action) => {
             if(state.device) state.device.rating = action.payload
+        })
+        .addCase(setTotalCount.fulfilled, (state, action) => {
+            state.totalCount = action.payload
         })
     }
 })
@@ -114,6 +118,14 @@ export const getDevicesThunk = createAsyncThunk<Device[], {brandId?: number, typ
 export const setCurrentPage = ({page}: {page: number}) => {
     return deviceSlice.actions.setCurrentPage({page})
 }
+
+export const setTotalCount = createAsyncThunk<number, {brandId?: number, typeId?: number}>(
+    'setTotalCount',
+    async function ({brandId, typeId}) {
+        const response = await deviceApi.getTotalCount({brandId, typeId})
+        return response.data as number
+    }
+)
 
 export const toggleIsFetching = (data: boolean) => {
     return {type: 'setToggleIsFetching', data}

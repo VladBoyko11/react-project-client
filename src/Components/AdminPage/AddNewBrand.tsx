@@ -3,14 +3,17 @@ import {Field, FormSubmitHandler, InjectedFormProps, reduxForm} from "redux-form
 import {renderField} from "../common/FormControl";
 import {connect, ConnectedProps} from "react-redux";
 import {addBrand} from '../../redux/adminPageSlice';
-import redirectToSomePage from '../common/RedirectToSomePage'
 import { Brand } from "../../redux/types";
+import { Button, FormGroup, FormLabel } from "@mui/material";
 
+import * as style from './AdminPage.scss'
+import { useNavigate } from "react-router-dom";
 const AddNewBrand: React.FC<AddNewBrandPropsType> = (props) => {
-
-    const submitForm: FormSubmitHandler = (formData: {brandName?: string}) => {
-        props.addBrand({name: formData.brandName})
-        redirectToSomePage('/admin-page', {replace: true})
+    const navigate = useNavigate()
+    const submitForm: FormSubmitHandler = (formData: {brand?: string}) => {
+        props.addBrand({name: formData.brand})
+        // redirectToSomePage('/admin-page', {replace: true})
+        navigate('/admin-page', {replace: true})
     }
     return (
         <AddNewBrandReduxForm onSubmit={submitForm}/>
@@ -19,12 +22,12 @@ const AddNewBrand: React.FC<AddNewBrandPropsType> = (props) => {
 
 const AddNewBrandForm: React.FC<InjectedFormProps<Brand>> = ({handleSubmit}) => {
     return (
-        <form className="" onSubmit={handleSubmit}>
-            <form>
-                <label htmlFor="brand">New brand</label>
-                <Field id="brand" placeholder='brand' name='brand' component={renderField}/>
-            </form>
-            <button className={'btn-warning'} type='submit'>Create</button>
+        <form onSubmit={handleSubmit} className={style.addNewTypeBrandForm}>
+            <FormGroup>
+                <FormLabel htmlFor="brand">New brand</FormLabel>
+                <Field id="brand" placeholder='brand' name='brand' component={renderField}></Field>
+            </FormGroup>
+            <Button variant="contained" type='submit'>Create</Button>
         </form>
     )
 }

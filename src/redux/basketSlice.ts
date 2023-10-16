@@ -35,36 +35,39 @@ const basketSlice = createSlice({
     setTotalPrice(state) {
       let totalPrice = 0
       state.devices.forEach(device => {
-        if(device.price) {
+        if (device.price) {
           const basketDevice = state.basketDevices.find(basketDevice => {
-            if(basketDevice.deviceId === device.id) return basketDevice
+            if (basketDevice.deviceId === device.id) return basketDevice
           })
-          if(basketDevice) totalPrice = totalPrice + device.price * state.basketDevices.length
-        }   
+          if (basketDevice) totalPrice = totalPrice + device.price * basketDevice.countOfProducts
+        }
       })
       state.totalPrice = totalPrice
     }
   },
   extraReducers: (builder) => {
     builder
-    .addCase(setBasketThunk.fulfilled, (state, action) => {
-      state.basket = action.payload
-    })
-    .addCase(deleteDeviceFromBasket.fulfilled, (state, action) => {
-      console.log(action.payload)
-    })
-    .addCase(getOneDevice.fulfilled, (state, action) => {
-      state.devices.push(action.payload)
-    })
-    .addCase(getDevicesFromBasket.fulfilled, (state, action) =>{ 
-      state.devices = action.payload
-    })
-    .addCase(changeCountOfProducts.fulfilled, (state, action) => {
-      state.basketDevices = state.basketDevices.map(basketDevice => {
-        if(basketDevice.deviceId === action.payload.deviceId) return action.payload
-        return basketDevice
+      .addCase(setBasketThunk.fulfilled, (state, action) => {
+        state.basket = action.payload
       })
-    })
+      .addCase(deleteDeviceFromBasket.fulfilled, (state, action) => {
+        console.log(action.payload)
+      })
+      .addCase(getOneDevice.fulfilled, (state, action) => {
+        state.devices.push(action.payload)
+      })
+      .addCase(getDevicesFromBasket.fulfilled, (state, action) => {
+        state.devices = action.payload
+      })
+      .addCase(changeCountOfProducts.fulfilled, (state, action) => {
+        state.basketDevices = state.basketDevices.map(basketDevice => {
+          setTotalPrice()
+          if (basketDevice.deviceId === action.payload.deviceId) {
+            return action.payload
+          }
+          return basketDevice
+        })
+      })
     // .addCase(setBasketDevices.fulfilled, (state, action) => {
     //   state.basketDevices = action.payload
     // })
@@ -83,10 +86,10 @@ export const setTotalPrice = () => {
 //   }
 // )
 
-export const changeCountOfProducts = createAsyncThunk<BasketDevice, {deviceId: number, countOfProducts: number}, { rejectValue: string}>(
+export const changeCountOfProducts = createAsyncThunk<BasketDevice, { deviceId: number, countOfProducts: number, basketId: number }, { rejectValue: string }>(
   'changeCountOfProducts',
-  async function ({deviceId, countOfProducts}) {
-    const response = await basketApi.changeCountOfProducts({deviceId, countOfProducts})
+  async function ({ deviceId, countOfProducts, basketId }) {
+    const response = await basketApi.changeCountOfProducts({ deviceId, countOfProducts, basketId })
     return response.data as BasketDevice
   }
 )
@@ -97,49 +100,56 @@ export const setBasketDevices = (arr: Array<BasketDevice>) => {
 
 export const setBasketThunk = createAsyncThunk<Basket, Basket, { rejectValue: string }>(
   'setBasket',
-  async function ({userId}) {
-    const response = await basketApi.getBasket({userId})
+  async function ({ userId }) {
+    const response = await basketApi.getBasket({ userId })
     return response.data
   }
 )
 
-export const addDeviceToBasket = createAsyncThunk<BasketDevice, {deviceId: number, basketId: number}, { rejectValue: string }>(
+export const addDeviceToBasket = createAsyncThunk<BasketDevice, { deviceId: number, basketId: number }, { rejectValue: string }>(
   'addDeviceToBasket',
-  async function ({deviceId, basketId}) {
+  async function ({ deviceId, basketId }) {
     const response = await basketApi.addDeviceToBasket({ deviceId, basketId })
     const basketDevice = response.data
-    getOneDevice({deviceId: basketDevice.deviceId})
+    getOneDevice({ deviceId: basketDevice.deviceId })
     return basketDevice
   }
 )
 
-export const getDevicesFromBasket = createAsyncThunk<Array<Device>, {basketId: number, dispatch: AppDispatch}, { rejectValue: string }>(
+export const getDevicesFromBasket = createAsyncThunk<Array<Device>, { basketId: number, dispatch: AppDispatch }, { rejectValue: string }>(
   'getDevicesFromBasket',
-  async function ({basketId, dispatch}) {
-    const response = await basketApi.getDevicesFromBasket({basketId})
-    const devices = response.data 
-    if(devices) dispatch(setBasketDevices(devices))
-    const arrIds = devices.map(item => {
-      return item.deviceId
-    })
+  async function ({ basketId, dispatch }) {
+    const response = await basketApi.getDevicesFromBasket({ basketId })
+    if (response.data === 'devices are not found in basket') {
+      dispatch(setBasketDevices([]))
+      return []
+    }
+    const devices = response.data
+    if (Array.isArray(devices)) {
+      dispatch(setBasketDevices(devices))
+      const arrIds = devices.map(item => {
+        return item.deviceId
+      })
 
-    const response2 = await deviceApi.getDevicesByIds(arrIds)
-    return response2.data
+      const response2 = await deviceApi.getDevicesByIds(arrIds)
+      return response2.data
+    }
+    return []
   }
 )
 
-export const deleteDeviceFromBasket = createAsyncThunk<string, {basketId: number, deviceId: number, dispatch: AppDispatch}, { rejectValue: string }>(
+export const deleteDeviceFromBasket = createAsyncThunk<string, { basketId: number, deviceId: number, dispatch: AppDispatch }, { rejectValue: string }>(
   'deleteDeviceFromBasket',
-  async function ({basketId, deviceId, dispatch}) {
+  async function ({ basketId, deviceId, dispatch }) {
     await basketApi.deleteDeviceFromBasket({ basketId, deviceId })
-    dispatch(getDevicesFromBasket({basketId, dispatch}))
+    dispatch(getDevicesFromBasket({ basketId, dispatch }))
     return 'Delete is completed'
   }
 )
 
-export const getOneDevice = createAsyncThunk<Device, {deviceId: number}, {rejectValue: string}>(
+export const getOneDevice = createAsyncThunk<Device, { deviceId: number }, { rejectValue: string }>(
   'getOneDevice',
-  async function ({deviceId}) {
+  async function ({ deviceId }) {
     const response = await deviceApi.getDevices({ deviceId })
     return response.data as Device
   }

@@ -4,14 +4,18 @@ import {renderField} from "../common/FormControl";
 import {connect, ConnectedProps} from "react-redux";
 import {addType} from "../../redux/adminPageSlice";
 import { RootState } from "../../redux/store";
-import redirectToSomePage from "../common/RedirectToSomePage";
+import useRedirectToSomePage from "../common/RedirectToSomePage";
 import { Type } from "../../redux/types";
+import { Button, FormGroup, FormLabel } from "@mui/material";
+import * as style from './AdminPage.scss'
+import { useNavigate } from "react-router-dom";
 
 const AddNewType: React.FC<AddNewTypeProps> = (props) => {
-
+    const navigate = useNavigate();
     const submitForm: FormSubmitHandler = (formData: {type?: string}) => {
         if(formData.type) props.addType({name: formData.type})
-        redirectToSomePage('/admin-page', {replace: true})
+        // useRedirectToSomePage('/admin-page', {replace: true})
+        navigate('/admin-page', {replace: true})
     }
     return (
         <AddNewTypeReduxForm onSubmit={submitForm}/>
@@ -20,12 +24,12 @@ const AddNewType: React.FC<AddNewTypeProps> = (props) => {
 
 const AddNewTypeForm: React.FC<InjectedFormProps<Type>> = ({handleSubmit}) => {
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="type">New type</label>
+        <form onSubmit={handleSubmit} className={style.addNewTypeBrandForm}>
+            <FormGroup>
+                <FormLabel htmlFor="type">New type</FormLabel>
                 <Field id="type" placeholder='type' name='type' component={renderField}/>
-            </div>
-            <button className={'btn-warning'} type='submit'>Create</button>
+            </FormGroup>
+            <Button variant="contained" type='submit'>Create</Button>
         </form>
     )
 }

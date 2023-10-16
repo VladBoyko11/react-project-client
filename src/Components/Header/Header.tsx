@@ -1,65 +1,100 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import * as style from './Header.module.scss'
-import {NavLink, useNavigate} from "react-router-dom";
-import {connect, ConnectedProps} from "react-redux";
-import {auth} from "../../redux/authSlice";
+import { NavLink, useNavigate } from "react-router-dom";
+import { connect, ConnectedProps } from "react-redux";
+import { auth } from "../../redux/authSlice";
 
 import { faBars, faCircleRight, faHouse, faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {getTypesThunk} from "../../redux/deviceSlice";
-import {setBasketThunk} from "../../redux/basketSlice";
+import { getTypesThunk } from "../../redux/deviceSlice";
+import { setBasketThunk } from "../../redux/basketSlice";
 import { RootState } from "../../redux/store";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Type } from "../../redux/types";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Button } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Header: React.FC<HeaderPropsType> = (props) => {
 
     const navigate = useNavigate()
-    const redirectToSomePage = (redirectPath: string) =>{
-        navigate(redirectPath, {replace: true})
+    // const token = sessionStorage.getItem('token')
+    const redirectToSomePage = (redirectPath: string) => {
+        navigate(redirectPath, { replace: true })
     }
-    if(!props.isAuth) {
-        props.auth({})
-    }
-    useEffect(()=>{
-        if(props.isAuth && props.id){
-            props.setBasketThunk({userId: props.id});
+    useEffect(() => {
+        if (!props.isAuth) {
+            // navigate('/auth', {replace: true})
+            props.auth();
+        } else {
+            console.log(`Token expired`)
         }
     }, [props.isAuth])
-    useEffect(() =>{
-        props.getTypesThunk({typeName: undefined})
+    useEffect(() => {
+        if (props.id) {
+            props.setBasketThunk({ userId: props.id });
+        }
+    }, [props.id])
+    useEffect(() => {
+        props.getTypesThunk({ typeName: undefined })
     }, [])
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#ffc107',
+            },
+        },
+    });
 
     return (
         <header>
-            <div className={`dropdown`}>
-                <button className={style.dropdownBtn} id='dropdownMenuButton' data-bs-toggle="dropdown"
-                        aria-expanded="false"><FontAwesomeIcon icon={faBars as IconProp } fontSize='30px' /></button>
-                <div className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
-                    <div className='dropdown-item' style={{cursor: 'pointer'}} onClick={() => {
-                        redirectToSomePage('/devices')}}
-                    ><FontAwesomeIcon icon={faCircleRight as IconProp} /> DEVICE PAGE</div>
-                    {props.types.map((type: Type, id: number) => {
-                        // return <div key={type.id} className='dropdown-item' style={{cursor: 'pointer'}} onClick={() => {
-                        //     redirectToSomePage(`/device/${type.name}`)}}
-                        // ><FontAwesomeIcon icon={faCircleRight} /> {type.name}</div>
-                        return <NavLink to={`/devices/${type.name}`} key={id} className='dropdown-item' style={{cursor: 'pointer'}}
-                        ><FontAwesomeIcon icon={faCircleRight as IconProp} /> {type.name} </NavLink>
-                    })}
+            <ThemeProvider theme={theme}>
+                <div>
+                    <Button variant="contained" id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick} ><FontAwesomeIcon icon={faBars as IconProp} fontSize='30px' /></Button>
+                    <Menu id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <NavLink className={style.menuItem} to={'/devices'}><MenuItem ><FontAwesomeIcon icon={faCircleRight as IconProp} /> DEVICE PAGE</MenuItem></NavLink>
+                        {props.types.map((type: Type, id: number) => {
+                            return <NavLink key={id} className={style.menuItem} to={`/devices/${type.name}`}><MenuItem><FontAwesomeIcon icon={faCircleRight as IconProp} /> {type.name}</MenuItem></NavLink>
+                        })}
+                    </Menu>
                 </div>
-            </div>
-            {props.isAuth ? <div className={'d-flex justify-content-between w-25'}>
-                    <div className={`rounded-circle ${style.userPageIcon}`} onClick={() => {
-                        redirectToSomePage('/user') }}>
-                        <FontAwesomeIcon className={style.loggedInUser} icon={faHouse as IconProp} fontSize='1.8rem'/>
-                    </div>
-                    <div className={`rounded-circle ${style.userPageIcon}`} onClick={() => {
-                        redirectToSomePage('/basket') }}>
-                        <FontAwesomeIcon className={style.loggedInUser} icon={faBasketShopping as IconProp} fontSize='1.8rem'/>
-                    </div>
-                    {props.role === 'ADMIN' ? <button className={style.btnAdminPage} onClick={() => {redirectToSomePage('/admin-page')}}>Admin Page</button> : null}
+                {props.isAuth ? <div className={style.isAuthButtons}>
+                    <Button variant="contained" className={style.userPageIcon} onClick={() => {
+                        redirectToSomePage('/user')
+                    }}>
+                        <FontAwesomeIcon className={style.loggedInUser} icon={faHouse as IconProp} fontSize='1.8rem' />
+                    </Button>
+                    <Button variant="contained" className={style.userPageIcon} onClick={() => {
+                        redirectToSomePage('/basket')
+                    }}>
+                        <FontAwesomeIcon className={style.loggedInUser} icon={faBasketShopping as IconProp} fontSize='1.8rem' />
+                    </Button>
+                    {props.role === 'ADMIN' ? <Button variant="contained" className={style.btnAdminPage} onClick={() => { redirectToSomePage('/admin-page') }}>Admin Page</Button> : null}
                 </div>
-                : <button className={style.authorizationBtn} onClick={() => {redirectToSomePage('/auth')}}>Authorization</button>}
+                    : <Button variant="contained" onClick={() => { redirectToSomePage('/auth') }}>Authorization</Button>}
+            </ThemeProvider>
         </header>
     )
 }
@@ -71,7 +106,7 @@ const mapStateToProps = (state: RootState) => ({
     id: state.auth.id
 })
 
-const connector = connect(mapStateToProps, {auth, getTypesThunk, setBasketThunk})
+const connector = connect(mapStateToProps, { auth, getTypesThunk, setBasketThunk })
 type ReduxPropsType = ConnectedProps<typeof connector>
 type HeaderPropsType = ReduxPropsType
 

@@ -5,6 +5,9 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { setNotification } from "../../../redux/notificationSlice";
 import { addYourDeviceRatingThunk, getBrandThunk, getDeviceThunk } from "../../../redux/deviceSlice";
+import * as style from '../Devices.module.scss'
+import { Button, FormGroup, FormLabel } from "@mui/material";
+
 
 const DevicePage: React.FC<DevicePagePropsType> = (props) => {
   const [rateDeviceBoolean, setRateDeviceBoolean] = useState(false);
@@ -18,51 +21,51 @@ const DevicePage: React.FC<DevicePagePropsType> = (props) => {
     }
   };
   return (
-    <div className={"d-flex justify-content-around w-75"} key={props.device.id}>
-      <div>
-        <div>
-          NAME: {props.brand.name} {props.device.name}
+    <div className={style.devicePage} key={props.device.id}>
+      <div className={style.devicePageHeader}>
+          {props.brand.name} {props.device.title}
         </div>
+      <div className={style.devicePageLeftSide}>
         <div>
           <img src={`http://localhost:5000/${props.device.img}`} alt="device" />
-          <div>PRICE: {props.device.price}</div>
+          <div className={style.devicePagePrice}>PRICE: <span className={style.devicePagePriceSpan}>{props.device.price} грн</span></div>
         </div>
       </div>
-      <div>
-        <span>RATING: </span>
-        {props.device.rating ? <RatingStars rating={props.device.rating} /> : null}
-        {rateDeviceBoolean ? (
-          <AddRateDeviceReduxForm onSubmit={submitForm} />
-        ) : (
-          <button
-            className={"mt-1"}
-            onClick={() => {
-              if (props.userId) {
-                setRateDeviceBoolean(true);
-              } else {
-                props.redirectToSomePage("/auth");
-                props.setNotification(
-                  "Вы не вошли в свой аккаунт, ввойдите перед тем как поставить оценку товару",
-                  true
-                );
-                setTimeout(() => {
-                  props.setNotification("", false);
-                }, 2000);
-              }
-            }}
-          >
-            Add your rating to the device
-          </button>
-        )}
-      </div>
-      <div>
-        <span>DESCRIPTION</span>
-        return (
-        <div>
-          <span>{props.device.title}: </span>
-          <span>{props.device.description}</span>
+      <div className={style.devicePageRightSide}>
+        <div className={style.devicePageRating}>
+          <span>RATING: </span>
+          {props.device.rating ? <RatingStars rating={props.device.rating} /> : null}
+          {rateDeviceBoolean ? (
+            <AddRateDeviceReduxForm onSubmit={submitForm} />
+          ) : (
+            <Button
+              variant="contained"
+              className={"mt-1"}
+              onClick={() => {
+                if (props.userId) {
+                  setRateDeviceBoolean(true);
+                } else {
+                  props.redirectToSomePage("/auth");
+                  props.setNotification(
+                    "Вы не вошли в свой аккаунт, ввойдите перед тем как поставить оценку товару",
+                    true
+                  );
+                  setTimeout(() => {
+                    props.setNotification("", false);
+                  }, 2000);
+                }
+              }}
+            >
+              Add your rating to the device
+            </Button>
+          )}
         </div>
-        );
+        <div className={style.devicePageDescription}>
+          <span>DESCRIPTION:</span>
+          <div>
+            <span>{props.device.description}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -71,8 +74,8 @@ const DevicePage: React.FC<DevicePagePropsType> = (props) => {
 const AddRateDeviceForm: React.FC<InjectedFormProps> = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <>
-        <label>Add your rating</label>
+      <FormGroup>
+        <FormLabel>Add your rating</FormLabel>
         <Field
           className={"form-select"}
           name="rating"
@@ -90,10 +93,10 @@ const AddRateDeviceForm: React.FC<InjectedFormProps> = ({ handleSubmit }) => {
           <option value="9">9</option>
           <option value="10">10</option>
         </Field>
-      </>
-      <button className={"btn-warning mt-2"} type="submit">
+      </FormGroup>
+      <Button variant="contained" className={"btn-warning mt-2"} type="submit">
         Add your rating
-      </button>
+      </Button>
     </form>
   );
 };
